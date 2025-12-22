@@ -127,23 +127,37 @@
     // Wrap both items in a vertical block
     #block[
       #hline()
-      #table(
-        columns: (1fr, auto, auto),
-        align: (left, left, left),
-        stroke: none,
-        [#strong(l18n.vendor_info.address)],
-        [#strong(l18n.vendor_info.iban)],
-        [#strong(l18n.vendor_info.organisation_number)],
-
-        [#data.vendor.company_name], [#data.payment_info.iban], [#data.vendor.organisation_number],
-        [#data.vendor.postal_address.street_address.line_1],
-        [#strong(l18n.vendor_info.bank)],
-        [#strong(l18n.vendor_info.vat_number)],
-
-        [#data.vendor.postal_address.street_address.line_2], [#data.payment_info.bank_name], [#data.vendor.vat_number],
-
-        [#data.vendor.postal_address.zip, #data.vendor.postal_address.city], [#strong(l18n.vendor_info.bic)], [],
-        [#data.vendor.postal_address.country], [#data.payment_info.bic], [],
+      #grid(
+        columns: (1fr, 1fr, 1fr),
+        gutter: 10pt,
+        // First column: Address
+        block[
+          #strong(l18n.vendor_info.address)\
+          #data.vendor.company_name\
+          #data.vendor.postal_address.street_address.line_1\
+          #display_if_non_empty(data.vendor.postal_address.street_address.line_2)
+          #data.vendor.postal_address.zip, #data.vendor.postal_address.city\
+          #data.vendor.postal_address.country
+        ],
+        // Second column: Payment Info
+        block[
+          #strong(l18n.vendor_info.iban)\
+          #data.payment_info.iban\
+          #v(5pt)
+          #strong(l18n.vendor_info.bank)\
+          #data.payment_info.bank_name\
+          #v(5pt)
+          #strong(l18n.vendor_info.bic)\
+          #data.payment_info.bic
+        ],
+        // Third column: Company IDs
+        block[
+          #strong(l18n.vendor_info.organisation_number)\
+          #data.vendor.organisation_number\
+          #v(5pt)
+          #strong(l18n.vendor_info.vat_number)\
+          #data.vendor.vat_number
+        ]
       )
       #hline()
       // Conditionally display footer text if it exists
