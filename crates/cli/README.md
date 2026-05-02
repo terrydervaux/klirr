@@ -186,6 +186,32 @@ or for _current_ `period` (month) instead of _last_ using `--period`:
 klirr invoice --period current
 ```
 
+or for a _specific_ previous `period` (e.g., November 2025):
+
+```bash
+klirr invoice --period 2025-11
+```
+
+You can also specify a specific fortnight:
+
+```bash
+klirr invoice --period 2025-11-first-half
+```
+
+or
+
+```bash
+klirr invoice --period 2025-11-second-half
+```
+
+> [!TIP]
+> The `--period` flag accepts three types of values:
+> - `current` - for the current month/fortnight
+> - `last` - for the previous month/fortnight (default)
+> - A specific period like `2025-11` (for November 2025) or `2025-11-first-half` (for the first fortnight of November 2025)
+> 
+> Shorthand notations for fortnights are also supported: `2025-11-1`, `2025-11-first`, `2025-11-2`, `2025-11-second`
+
 or if you want to configure output path using `-out`:
 
 ```bash

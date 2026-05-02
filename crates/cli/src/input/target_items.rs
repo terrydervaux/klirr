@@ -9,8 +9,8 @@ pub enum TargetItems {
     Services,
     /// Services mode with time off specification
     ServicesOff(TimeOffInput),
-    /// Expenses mode, specify expenses in `input/data/expenses.json` for the
-    /// target month.
+    /// Expenses mode, specify expenses in `input/data/expenses.ron` for the
+    /// target period. Uses the period from --period flag if specified.
     Expenses,
 }
 

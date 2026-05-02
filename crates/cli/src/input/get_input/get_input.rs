@@ -182,6 +182,30 @@ mod tests {
             }
 
             #[test]
+            fn test_input_parsing_period_specific_month() {
+                let input = CliArgs::parse_from([BINARY_NAME, "invoice", "--period", "2025-11"]);
+                match input.command.unwrap_invoice().period {
+                    TargetPeriod::Specific(PeriodAnno::YearAndMonth(ym)) => {
+                        assert_eq!(ym, YearAndMonth::november(2025));
+                    }
+                    _ => panic!("Expected Specific(YearAndMonth)"),
+                }
+            }
+
+            #[test]
+            fn test_input_parsing_period_specific_fortnight() {
+                let input = CliArgs::parse_from([BINARY_NAME, "invoice", "--period", "2025-11-first-half"]);
+                match input.command.unwrap_invoice().period {
+                    TargetPeriod::Specific(PeriodAnno::YearMonthAndFortnight(ymf)) => {
+                        assert_eq!(*ymf.year(), Year::from(2025));
+                        assert_eq!(*ymf.month(), Month::November);
+                        assert_eq!(*ymf.half(), MonthHalf::First);
+                    }
+                    _ => panic!("Expected Specific(YearMonthAndFortnight)"),
+                }
+            }
+
+            #[test]
             fn test_input_parsing_language_specified() {
                 let input = CliArgs::parse_from([BINARY_NAME, "invoice", "--language", "swedish"]);
                 assert_eq!(input.command.unwrap_invoice().language, Language::SV);
